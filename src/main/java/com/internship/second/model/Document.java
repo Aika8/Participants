@@ -2,33 +2,33 @@ package com.internship.second.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.validator.constraints.Range;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
-@Table(name = "phones")
+@Table(name = "documents")
 @Getter
 @Setter
 @Data
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor
-public class Phone {
+public class Document {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
-    @Column(name = "number", nullable = false)
+    @Column(name = "harvard_doc", nullable = false)
     @NotEmpty
-    @Size(max = 11)
-    private String number;
+    private String harvardDoc;
+
+    @Column(name = "columbia_doc", nullable = false)
+    @NotEmpty
+    private String columbiaDoc;
 
     @ManyToOne
-    @JoinColumn(name="person_id")
+    @JoinColumn(name="participant_id")
     @JsonBackReference
-    private Person person;
+    private Participant participant;
 
 }

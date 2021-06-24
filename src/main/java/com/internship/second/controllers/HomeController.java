@@ -1,61 +1,73 @@
 package com.internship.second.controllers;
 
-import com.internship.second.model.Person;
-import com.internship.second.model.Phone;
-import com.internship.second.repository.PersonRepository;
-import com.internship.second.repository.PhoneRepository;
+import com.internship.second.model.Document;
+import com.internship.second.model.Participant;
+import com.internship.second.repository.DocumentRepository;
+import com.internship.second.repository.ParticipantRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/persons")
+@RequestMapping("/api/participants")
 @Slf4j
 public class HomeController {
 
     @Autowired
-    private PersonRepository personRepository;
+    private ParticipantRepository participantRepository;
 
     @Autowired
-    private PhoneRepository phoneRepository;
+    private DocumentRepository documentRepository;
 
 
     @PostMapping()
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public Person save(@RequestBody Person person) {
-        log.info("create {}", person);
-        person = personRepository.save(person);
-        return person;
+    public Participant save(@RequestBody Participant participant) {
+        log.info("create {}", participant);
+        participant = participantRepository.save(participant);
+        return participant;
     }
 
 
-    @GetMapping(value = "/by-ages")
-    public List<Person> getBetweenAges(@RequestParam int age1, @RequestParam int age2) {
-        log.info("get persons between ages {} and {}", age1, age2);
-        return personRepository.findAllByAgeBetween(age1, age2);
-    }
+//    @GetMapping(value = "/by-ages")
+//    public List<Participant> getBetweenAges(@RequestParam int age1, @RequestParam int age2) {
+//        log.info("get persons between ages {} and {}", age1, age2);
+//        return participantRepository.findAllByAgeBetween(age1, age2);
+//    }
 
     @GetMapping(value = "/by-name/{name}")
-    public List<Person> getByName(@PathVariable String name) {
+    public List<Participant> getByName(@PathVariable String name) {
         log.info("get persons by name containing {}", name);
-        return personRepository.findAllByNameContaining(name);
+        return participantRepository.findAllByNameContaining(name);
     }
 
     @GetMapping()
-    public List<Person> get() {
-        log.info("get all persons");
-        return personRepository.findAll();
+    public List<Participant> get() {
+        log.info("get all participants");
+        return participantRepository.findAll();
     }
 
-    @GetMapping(value = "/phones")
-    public List<Phone> getPhones(@RequestParam int id) {
-        Person person = personRepository.getById(id);
-        log.info("get all phones of {}", person.getName());
-        return phoneRepository.findAllByPerson(person);
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable Integer id ){
+        Participant participant = participantRepository.getById(id);
+        log.info("delete {}", participant.getName());
+        participantRepository.delete(participant);
+    }
+
+    @GetMapping(value = "/documents/{id}")
+    public List<Document> getDocuments(@PathVariable Integer id ) {
+        Participant participant = participantRepository.getById(id);
+        log.info("get all phones of {}", participant.getName());
+        return documentRepository.findAllByParticipant(participant);
+    }
+
+    @PostMapping(value = "/documents")
+    public Document saveDoc(@RequestBody Document document) {
+        log.info("create {}", document);
+        document = documentRepository.save(document);
+        return document;
     }
 
 }

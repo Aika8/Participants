@@ -11,13 +11,13 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Table(name = "persons")
+@Table(name = "participants")
 @Getter
 @Setter
 @Data
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor
-public class Person {
+public class Participant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +33,11 @@ public class Person {
     @Range(min = 1, max = 120, message = "age must be 1-120")
     private int age;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+    @Column(name = "LSAT_score")
+    private int LASTScore;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "participant")
     @JsonManagedReference
-    private List<Phone> phones;
+    private List<Document> documents;
 
 }

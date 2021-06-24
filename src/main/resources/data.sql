@@ -1,8 +1,8 @@
-INSERT INTO PERSONS (NAME, AGE)
-VALUES ('martin', 13),
-       ('harvey', 45),
-       ('mikey', 30);
+INSERT INTO PARTICIPANTS (NAME, AGE, LSAT_SCORE)
+VALUES ('martin', 13, 0),
+       ('harvey', 45, 0),
+       ('mikey', 30, 0);
 
-INSERT INTO PHONES (NUMBER, PERSON_ID)
-VALUES ('87776445786', 1),
-       ('87776445586', 2);
+INSERT INTO DOCUMENTS (HARVARD_DOC, COLUMBIA_DOC, PARTICIPANT_ID)
+VALUES ('harvard harvard','columbia columbia', 1),
+       ('harvard harvard','columbia columbia', 2);
